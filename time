@@ -1,0 +1,28 @@
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+
+public class Czas {
+    public static void main(String[] args) {
+        // Data i godzina dla tej chwili
+        LocalDateTime time1 = LocalDateTime.now();
+
+        // + 30 godzin
+        LocalDateTime time2 = time1.plusHours(50);
+
+        // Specyficzna data i godzina
+        LocalDateTime specificDate = LocalDateTime.of(1990, Month.APRIL, 8, 12, 30);
+
+        // Roznica miedzy 2 datami
+        Duration duration = Duration.between(time1, time2);
+
+        // Konwertuj roznice do liczby dni
+        System.out.println(duration.toDays());
+
+        // Formatowanie daty: 1990-04-08 12:30
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        System.out.println(specificDate.format(formatter));
+
+    }
+}
