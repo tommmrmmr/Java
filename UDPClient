@@ -1,0 +1,45 @@
+package UDP.client.src;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+
+public class udpClient {
+    private static String readUserInput() throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.print("Wprowadź tekst małą literą: ");
+        return reader.readLine();
+    }
+
+    public static void main(String[] args) {
+        try {
+            InetAddress address = InetAddress.getByName("localhost");
+            int port = 20000;
+
+            byte[] userInput = readUserInput().getBytes();
+
+            DatagramSocket clientSocket = new DatagramSocket();
+            DatagramPacket data = new DatagramPacket(userInput, userInput.length, address, port);
+            clientSocket.send(data);
+
+            byte[] responseBuffer = new byte[2048];
+            DatagramPacket responseData = new DatagramPacket(responseBuffer, responseBuffer.length);
+            clientSocket.receive(responseData);
+
+            String receivedData = new String(responseBuffer, 0, responseData.getLength());
+            System.out.print("Tekst otrzymany z serwera: ");
+            System.out.println(receivedData);
+
+            clientSocket.close();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
