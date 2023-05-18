@@ -1,0 +1,22 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Zadanie3 {
+    //Napisz program, który na wejsciu przyjmuje 3 liczby całkowite a na wyjściu wyświetli największą z nich
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] value = new int[3];
+        System.out.print("Wpisz trzy dowolne liczby całkowite: ");
+        for (int i = 0; i < 3; ++i) {
+            value[i] = Integer.parseInt(br.readLine());
+        }
+
+        int max = value[0];
+        for (int i = 1; i < 3; ++i) {
+            if (max < value[i])
+                max = value[i];
+        }
+        System.out.println("Największa z nich to: " + Integer.toString(max));
+    }
+}
