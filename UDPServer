@@ -1,0 +1,48 @@
+package UDP.server.src;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+
+public class udpServer {
+
+    public static void main(String[] args) {
+        int port = 20000;
+        DatagramSocket serverSocket = null;
+        try {
+            serverSocket = new DatagramSocket(port);
+        } catch (SocketException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        while(true) {
+            try {
+                byte[] buffer = new byte[2048];
+
+                DatagramPacket data = new DatagramPacket(buffer, buffer.length);
+                serverSocket.receive(data);
+
+                String receivedData = new String(buffer, 0, data.getLength());
+                InetAddress clientAddress = data.getAddress();
+                int clientPort = data.getPort();
+                System.out.print("Otrzymano wiadomość od klienta " + clientAddress.toString() + " on port " + clientPort + ": ");
+                System.out.println(receivedData);
+
+                String receivedDataUpperCased = receivedData.toUpperCase();
+                byte[] responseBuffer = receivedDataUpperCased.getBytes();
+                DatagramPacket responseData = new DatagramPacket(responseBuffer, responseBuffer.length, clientAddress, clientPort);
+                serverSocket.send(responseData);
+
+                System.out.print("Wyślij tekst napisany WIELKIMI LITERAMI wiadomość do klienta " + clientAddress.toString() + " on port " + clientPort + ": ");
+                System.out.println(receivedDataUpperCased);
+            } catch (SocketException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
