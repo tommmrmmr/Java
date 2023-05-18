@@ -1,0 +1,40 @@
+package TCP.ClientTCP.src;
+
+import java.io.*;
+import java.net.*;
+
+
+public class Client {
+    private static String readUserInput() throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.print("Wprowadź tekst z małej litery: ");
+        return reader.readLine();
+    }
+
+    public static void main(String[] args) {
+        try {
+            Socket socket = new Socket("localhost", 10001);
+            OutputStream output = socket.getOutputStream();
+            PrintWriter writer = new PrintWriter(output, true);
+
+            while(true) {
+                writer.println(readUserInput());
+
+                InputStream input = socket.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                String line = reader.readLine();
+                if (line == null) {
+                    System.out.println("Połączenie zamkniętę!");
+                    socket.close();
+                    break;
+                }
+
+                System.out.print("Otrzymane z serwera: ");
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
