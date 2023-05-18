@@ -1,0 +1,39 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Zadanie2 {
+    //Napisz program, który przyjmuje kolejno 8 parametrów a następnie  wyświetli którki tekst
+    // z użyciem tych parametrów
+    private static BufferedReader bufferedReader = new BufferedReader(new
+            InputStreamReader(System.in));
+
+    public static void main(String[] args) throws IOException {
+        System.out.print("Podaj imię: ");
+        String arg1 = bufferedReader.readLine();
+        System.out.print("Podaj nazwisko: ");
+        String arg2 = bufferedReader.readLine();
+        System.out.print("Ile masz lat?: ");
+        String arg3 = bufferedReader.readLine();
+        System.out.print("Miejsce urodzenia: ");
+        String arg4 = bufferedReader.readLine();
+        System.out.print("Miejsce zamieszkania: ");
+        String arg5 = bufferedReader.readLine();
+        System.out.print("Podaj wykształcenie: ");
+        String arg6 = bufferedReader.readLine();
+        System.out.print("Miejsce pracy: ");
+        String arg7 = bufferedReader.readLine();
+        System.out.print("Ile chcesz mieć lat, gdy zostaniesz rentierem?: ");
+        String arg8 = bufferedReader.readLine();
+
+        System.out.println("Poniżej zadania, które musisz wykonać:");
+        System.out.println("Dowiedz się skąd pochodzi imię " +arg1+ ".");
+        System.out.println("Dowiedz się czy twoje nazwisko tj. " +arg2+ " odmienia się w języku polskim.");
+        System.out.println("Skoro masz " +arg3+ " lat, zastanów się ile lat pozostało Ci do emerytury?" );
+        System.out.println("Sprawdź ilu mieszkańców liczy " +arg4+ "." );
+        System.out.println("Czy " +arg5+ " to dobre miejsce do uprawiania sportów zimowych?");
+        System.out.println("Jak twoje wykształcenie tj. " +arg6+ " wpływa na twoją zdolność kredytową?");
+        System.out.println("Czy " +arg7+ " jest twoim pierwszym miejscem pracy?");
+        System.out.println("Daj mi znać, czy udało Ci się osiągnąć twoje marzenie w wieku " +arg8+ " lat.");
+    }
+}
