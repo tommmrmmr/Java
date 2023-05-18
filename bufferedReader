@@ -1,0 +1,30 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+
+public class Zadanie2 {
+    private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) throws IOException {
+        System.out.print("Imię: ");
+        String imię = bufferedReader.readLine();
+        System.out.print("Nazwisko: ");
+        String nazwisko = bufferedReader.readLine();
+        System.out.print("Wiek: ");
+        String wiek = bufferedReader.readLine();
+        System.out.print("Miejsce zamieszkania: ");
+        String zam = bufferedReader.readLine();
+        System.out.print("Zainteresowania: ");
+        String zai = bufferedReader.readLine();
+        System.out.print("Umiejętności: ");
+        String umie = bufferedReader.readLine();
+        System.out.print("Języki Obce: ");
+        String jezyk = bufferedReader.readLine();
+        System.out.print("Coś o sobie: ");
+        String cos = bufferedReader.readLine();
+        System.out.println("Imię: " +imię+ "\nNazwisko: " + nazwisko+ "\nWiek: " + wiek+
+                "\nMiejsce zamieszkania:" + zam+ "\nZainteresowania: " + zai+ "\nUmiejętności: " + umie+
+                "\nJęzyki Obce: " + jezyk+ "\nCoś o sobie: " + cos+ "\n\n:) Dziękuję za wypełnienie ankiety :)");
+
+    }
+}
