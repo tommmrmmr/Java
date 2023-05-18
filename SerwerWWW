@@ -1,0 +1,93 @@
+package Serwer;
+
+import java.io.*;
+import java.net.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+//http://localhost:6555/html.html
+public class SerwerWWW
+{
+
+    public static final String DEFAULT_404 = "<html><head><title>404</title></head><body><p>404 - Nie znaleziono strony</p></body></html>";
+
+    public static void main(String[] args)
+    {
+
+        String Nagłówek = "HTTP/1.1 200 OK\r\n";
+
+
+        String NagłówekCD = "Połączenie zamknięte\r\n" +
+                "Typ zawartości: text/html\r\n" +
+                "Długość zawartości: ";
+
+        String PustaLinia = "\r\n\r\n";
+
+        String result;
+        String pth = "";
+
+        int port = 6555;
+        if (args.length > 0) port = Integer.parseInt(args[0]);
+
+        while (true)
+        {
+
+            try (ServerSocket serverSocket = new ServerSocket(port))
+            {
+                Socket session = serverSocket.accept();
+                InputStream in = session.getInputStream();
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                String line = br.readLine();
+
+                System.out.println("Nagłówek połączenia przychodzącego:");
+
+                while (line != null)
+                {
+                    if (line.contains("HTTP/1."))
+                    {
+                        pth = line.split(" ")[1];
+                    }
+
+                    line = br.readLine();
+                    if (line.isEmpty())
+                    {
+                        break;
+                    }
+                }
+
+
+                try
+                {
+                    result = new String (Files.readAllBytes(Paths.get("Odczytywanie pliku"+ pth)));
+                }
+                catch (IOException e) {
+
+                    Nagłówek = "HTTP/1.1 404 Not Found\r\n";
+                    result = DEFAULT_404;
+                }
+
+                String responseBody = Nagłówek + NagłówekCD + result.length() + PustaLinia + result;
+
+
+                System.out.println(responseBody+"\n\n\n");
+
+                BufferedWriter out = new BufferedWriter(
+                        new OutputStreamWriter(
+                                new BufferedOutputStream(session.getOutputStream()), "UTF-8")
+                );
+                out.write(responseBody);
+                out.flush();
+
+
+                out.close();
+                session.close();
+
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+}
